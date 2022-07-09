@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApplicationController
-  before_action :authorize
+  before_action :authorized
+  # skip_before_action :authorized
   before_action :set_post, only: [:show, :update, :destroy]
-
 
   # GET
   def index
@@ -18,6 +18,8 @@ class Api::V1::PostsController < ApplicationController
   # POST
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
+    # @post = current_user.posts.build(params[:post])
 
     if @post.save
       render json: @post, status: :created, location: api_v1_post_path(@post)
@@ -47,6 +49,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :user_id)
   end
 end

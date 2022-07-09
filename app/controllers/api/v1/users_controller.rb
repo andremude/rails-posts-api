@@ -1,29 +1,38 @@
 class Api::V1::UsersController < ApplicationController
-  def create
-    @user = User.create(user_params)
-
-    if @user.valid?
-      token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: token }, status: :ok
-    else
-      render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
-    end
-  end
+  before_action :authorized
+  skip_before_action :authorized, only: [:login, :signup]
 
   def login
-    @user =  User.find_by(username: user_params[:username])
+    user = User.find_by(username: params[:username])
 
-    if @user && @user.authenticate(user_params[:password])
-      token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: token }, status: :ok
+    if user && user.authenticate(params[:password])
+      # if user is authenticated, user_id is set in the session cookie
+      session[:user_id] = user.id
+      render json: user
     else
-      render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
+      render json: { errors: "Invalid username or password" },
+      status: :unauthorized
     end
   end
 
-  private
+  def signup
+    user = User.create(username: params[:username], password: params[:password])
 
-  def user_params
-    params.require(:user).permit(:username, :password)
+    if user.valid?
+      session[:user_id] = user.id
+      render json: user, status: :created
+    else
+      render json: { errors: user.errors.full_messages }, status: :bad_request
+    end
+  end
+
+  def autologin
+    render json: @current_user
+  end
+
+  def logout
+    session.delete(:user_id)
+
+    render json: { message: "Logged out" }
   end
 end
