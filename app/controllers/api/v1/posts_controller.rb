@@ -38,8 +38,16 @@ class Api::V1::PostsController < ApplicationController
   end
 
   # DELETE
+  # def destroy
+  #   @post.destroy
+  # end
+
   def destroy
-    @post.destroy
+    if current_user == @post.user
+      @post.destroy
+    else
+    render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   private
