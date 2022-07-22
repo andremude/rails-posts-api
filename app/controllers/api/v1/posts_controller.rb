@@ -42,6 +42,8 @@ class Api::V1::PostsController < ApplicationController
   #   @post.destroy
   # end
 
+
+  # DELETE
   def destroy
     if current_user == @post.user
       @post.destroy
