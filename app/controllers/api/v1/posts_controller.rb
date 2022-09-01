@@ -8,6 +8,10 @@ class Api::V1::PostsController < ApplicationController
     @posts = Post.all
 
     render json: @posts
+    # render json: {
+    # message: 'Get posts',
+    # data: ActiveModel::Serializer::CollectionSerializer.new(posts, each_serializer: PostSerializer)
+    #   }
   end
 
   # GET
