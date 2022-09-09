@@ -1,7 +1,8 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # origins '*' won't work!
-    origins 'localhost:3001' # Change this when deploy!
+    # origins 'localhost:3001' # Change this when deploy!
+    origins "https://react-posts-api.herokuapp.com"
 
     resource '*',
       headers: :any,
