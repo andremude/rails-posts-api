@@ -1,6 +1,5 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authorized
-  # skip_before_action :authorized
   before_action :set_post, only: [:show, :update, :destroy]
 
   # GET
@@ -8,10 +7,6 @@ class Api::V1::PostsController < ApplicationController
     @posts = Post.all
 
     render json: @posts
-    # render json: {
-    # message: 'Get posts',
-    # data: ActiveModel::Serializer::CollectionSerializer.new(posts, each_serializer: PostSerializer)
-    #   }
   end
 
   # GET
@@ -23,7 +18,6 @@ class Api::V1::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-    # @post = current_user.posts.build(params[:post])
 
     if @post.save
       render json: @post, status: :created, location: api_v1_post_path(@post)
@@ -40,12 +34,6 @@ class Api::V1::PostsController < ApplicationController
       render json: @post.errors, status: :unprocessable_entity
     end
   end
-
-  # DELETE
-  # def destroy
-  #   @post.destroy
-  # end
-
 
   # DELETE
   def destroy
