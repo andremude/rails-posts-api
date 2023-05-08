@@ -1,0 +1,3 @@
+[submodule "react-posts-frontend"]
+	path = react-posts-frontend
+	url = git@github.com:andremude/react-posts-frontend.git
