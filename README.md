@@ -1,24 +1,59 @@
-# README
+# README - Posts App - Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Tech Stack
+   * Ruby '2.7.4'
+   * Rails '6.1.6'
+   * PostgreSQL '12.9'
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+Clone repository: 
 
-* System dependencies
+  `git@github.com:andremude/rails-posts-api.git`
 
-* Configuration
+<br>
 
-* Database creation
+Install dependencies: 
 
-* Database initialization
+  `bundle install`
 
-* How to run the test suite
+<br>
 
-* Services (job queues, cache servers, search engines, etc.)
+Database management:
 
-* Deployment instructions
+  `rails db:create`
 
-* ...
+  `rails db:migrate`
+
+  `rails db:seed`
+
+<br>  
+
+Run server
+
+  `rails server`
+
+<br>
+
+## RSpec Testing
+  
+  In Gemfile add: 
+  
+ ```
+   group :development, :test do
+     gem 'rspec-rails', '~> 6.0.0'
+     gem 'rails-controller-testing'
+   end
+```
+
+ In terminal: 
+  
+  run `bundle exec rspec`
+
+<br>
+
+## Screenshots
+
+![posts-app](https://github.com/andremude/rails-posts-api/assets/71613801/a3fd9075-efd5-497d-9f3b-51ba924d6de8)
+
+
